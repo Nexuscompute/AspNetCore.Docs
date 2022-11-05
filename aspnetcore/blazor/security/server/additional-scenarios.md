@@ -6,12 +6,13 @@ monikerRange: '>= aspnetcore-3.1'
 ms.author: riande
 ms.custom: mvc
 ms.date: 11/09/2021
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: blazor/security/server/additional-scenarios
 ---
 # ASP.NET Core Blazor Server additional security scenarios
 
-::: moniker range=">= aspnetcore-6.0"
+This article explains how to configure Blazor Server for additional security scenarios, including how to pass tokens to a Blazor Server app.
+
+:::moniker range=">= aspnetcore-6.0"
 
 ## Pass tokens to a Blazor Server app
 
@@ -42,8 +43,8 @@ Define a **scoped** token provider service that can be used within the Blazor ap
 ```csharp
 public class TokenProvider
 {
-    public string AccessToken { get; set; }
-    public string RefreshToken { get; set; }
+    public string? AccessToken { get; set; }
+    public string? RefreshToken { get; set; }
 }
 ```
 
@@ -62,8 +63,8 @@ Define a class to pass in the initial app state with the access and refresh toke
 ```csharp
 public class InitialApplicationState
 {
-    public string AccessToken { get; set; }
-    public string RefreshToken { get; set; }
+    public string? AccessToken { get; set; }
+    public string? RefreshToken { get; set; }
 }
 ```
 
@@ -95,12 +96,12 @@ In the `App` component (`App.razor`), resolve the service and initialize it with
 
 @code {
     [Parameter]
-    public InitialApplicationState InitialState { get; set; }
+    public InitialApplicationState? InitialState { get; set; }
 
     protected override Task OnInitializedAsync()
     {
-        TokenProvider.AccessToken = InitialState.AccessToken;
-        TokenProvider.RefreshToken = InitialState.RefreshToken;
+        TokenProvider.AccessToken = InitialState?.AccessToken;
+        TokenProvider.RefreshToken = InitialState?.RefreshToken;
 
         return base.OnInitializedAsync();
     }
@@ -108,6 +109,8 @@ In the `App` component (`App.razor`), resolve the service and initialize it with
 ```
 
 Add a package reference to the app for the [`Microsoft.AspNet.WebApi.Client`](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client) NuGet package.
+
+[!INCLUDE[](~/includes/package-reference.md)]
 
 In the service that makes a secure API request, inject the token provider and retrieve the token for the API request:
 
@@ -158,9 +161,9 @@ app.MapBlazorHub().RequireAuthorization(
     });
 ```
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
 ## Pass tokens to a Blazor Server app
 
@@ -258,6 +261,8 @@ In the `App` component (`App.razor`), resolve the service and initialize it with
 
 Add a package reference to the app for the [`Microsoft.AspNet.WebApi.Client`](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client) NuGet package.
 
+[!INCLUDE[](~/includes/package-reference.md)]
+
 In the service that makes a secure API request, inject the token provider and retrieve the token for the API request:
 
 ```csharp
@@ -307,9 +312,9 @@ endpoints.MapBlazorHub().RequireAuthorization(
     });
 ```
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range="< aspnetcore-5.0"
+:::moniker range="< aspnetcore-5.0"
 
 ## Pass tokens to a Blazor Server app
 
@@ -413,6 +418,8 @@ In the `App` component (`App.razor`), resolve the service and initialize it with
 ```
 
 Add a package reference to the app for the [`Microsoft.AspNet.WebApi.Client`](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client) NuGet package.
+
+[!INCLUDE[](~/includes/package-reference.md)]
 
 In the service that makes a secure API request, inject the token provider and retrieve the token for the API request:
 
@@ -520,4 +527,4 @@ If tacking on a segment to the authority isn't appropriate for the app's OIDC pr
 
 You can find the App ID URI to use in the OIDC provider app registration description.
 
-::: moniker-end
+:::moniker-end

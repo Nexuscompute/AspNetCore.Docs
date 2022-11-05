@@ -6,27 +6,26 @@ description: Learn how to use the ASP.NET Core Component Tag Helper to render Ra
 monikerRange: '>= aspnetcore-3.1'
 ms.custom: mvc
 ms.date: 10/29/2020
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: mvc/views/tag-helpers/builtin-th/component-tag-helper
 ---
 # Component Tag Helper in ASP.NET Core
 
 ## Prerequisites
 
-::: moniker range=">= aspnetcore-5.0"
+:::moniker range=">= aspnetcore-5.0"
 
 Follow the guidance in the *Configuration* section for either:
 
 * [Blazor Server](xref:blazor/components/prerendering-and-integration?pivots=server): Integrate routable and non-routable Razor components into Razor Pages and MVC apps.
 * [Blazor WebAssembly](xref:blazor/components/prerendering-and-integration?pivots=webassembly): Integrate Razor components from a hosted Blazor WebAssembly solution into Razor Pages and MVC apps.
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range="< aspnetcore-5.0"
+:::moniker range="< aspnetcore-5.0"
 
 Follow the guidance in the *Configuration* section of the <xref:blazor/components/prerendering-and-integration?pivots=server> article.
 
-::: moniker-end
+:::moniker-end
 
 ## Component Tag Helper
 
@@ -40,7 +39,7 @@ To render a component from a page or view, use the [Component Tag Helper](xref:M
 * Is prerendered into the page.
 * Is rendered as static HTML on the page or if it includes the necessary information to bootstrap a Blazor app from the user agent.
 
-::: moniker range=">= aspnetcore-5.0"
+:::moniker range=">= aspnetcore-5.0"
 
 Blazor WebAssembly app render modes are shown in the following table.
 
@@ -57,9 +56,9 @@ Blazor Server app render modes are shown in the following table.
 | <xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.Server> | Renders a marker for a Blazor Server app. Output from the component isn't included. When the user-agent starts, this marker is used to bootstrap a Blazor app. |
 | <xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.Static> | Renders the component into static HTML. |
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range="< aspnetcore-5.0"
+:::moniker range="< aspnetcore-5.0"
 
 Blazor Server app render modes are shown in the following table.
 
@@ -69,7 +68,7 @@ Blazor Server app render modes are shown in the following table.
 | <xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.Server> | Renders a marker for a Blazor Server app. Output from the component isn't included. When the user-agent starts, this marker is used to bootstrap a Blazor app. |
 | <xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.Static> | Renders the component into static HTML. |
 
-::: moniker-end
+:::moniker-end
 
 Additional characteristics include:
 
@@ -156,7 +155,7 @@ The parameter type must be JSON serializable, which typically means that the typ
 
 In the following example, a class object is passed to the component:
 
-*MyClass.cs*:
+`MyClass.cs`:
 
 ```csharp
 public class MyClass
@@ -172,7 +171,7 @@ public class MyClass
 
 **The class must have a public parameterless constructor.**
 
-*Shared/MyComponent.razor*:
+`Shared/MyComponent.razor`:
 
 ```razor
 <h2>MyComponent</h2>
@@ -187,7 +186,7 @@ public class MyClass
 }
 ```
 
-*Pages/MyPage.cshtml*:
+`Pages/MyPage.cshtml`:
 
 ```cshtml
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

@@ -1,125 +1,21 @@
 ---
 title: ASP.NET Core Blazor state management
 author: guardrex
-description: Learn how to persist state in Blazor Server apps.
+description: Learn how to persist user data (state) in Blazor apps.
 monikerRange: '>= aspnetcore-3.1'
 ms.author: riande
 ms.custom: mvc
 ms.date: 11/09/2021
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: blazor/state-management
 zone_pivot_groups: blazor-hosting-models
 ---
 # ASP.NET Core Blazor state management
 
-::: moniker range=">= aspnetcore-6.0"
+This article describes common approaches for maintaining a user's data (state) while they use an app and across browser sessions.
 
-::: zone pivot="webassembly"
+:::moniker range=">= aspnetcore-6.0"
 
-User state created in a Blazor WebAssembly app is held in the browser's memory.
-
-Examples of user state held in browser memory include:
-
-* The hierarchy of component instances and their most recent render output in the rendered UI.
-* The values of fields and properties in component instances.
-* Data held in [dependency injection (DI)](xref:fundamentals/dependency-injection) service instances.
-* Values set through [JavaScript interop](xref:blazor/js-interop/call-javascript-from-dotnet) calls.
-
-When a user closes and re-opens their browser or reloads the page, user state held in the browser's memory is lost.
-
-> [!NOTE]
-> [Protected Browser Storage](xref:blazor/state-management?pivots=server#aspnet-core-protected-browser-storage) (<xref:Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage?displayProperty=fullName> namespace) relies on ASP.NET Core Data Protection and is only supported for Blazor Server apps.
-
-## Persist state across browser sessions
-
-Generally, maintain state across browser sessions where users are actively creating data, not simply reading data that already exists.
-
-To preserve state across browser sessions, the app must persist the data to some other storage location than the browser's memory. State persistence isn't automatic. You must take steps when developing the app to implement stateful data persistence.
-
-Data persistence is typically only required for high-value state that users expended effort to create. In the following examples, persisting state either saves time or aids in commercial activities:
-
-* Multi-step web forms: It's time-consuming for a user to re-enter data for several completed steps of a multi-step web form if their state is lost. A user loses state in this scenario if they navigate away from the form and return later.
-* Shopping carts: Any commercially important component of an app that represents potential revenue can be maintained. A user who loses their state, and thus their shopping cart, may purchase fewer products or services when they return to the site later.
-
-An app can only persist *app state*. UIs can't be persisted, such as component instances and their render trees. Components and render trees aren't generally serializable. To persist UI state, such as the expanded nodes of a tree view control, the app must use custom code to model the behavior of the UI state as serializable app state.
-
-## Where to persist state
-
-Common locations exist for persisting state:
-
-* [Server-side storage](#server-side-storage-wasm)
-* [URL](#url-wasm)
-* [Browser storage](#browser-storage-wasm)
-* [In-memory state container service](#in-memory-state-container-service-wasm)
-
-<h2 id="server-side-storage-wasm">Server-side storage</h2>
-
-For permanent data persistence that spans multiple users and devices, the app can use independent server-side storage accessed via a web API. Options include:
-
-* Blob storage
-* Key-value storage
-* Relational database
-* Table storage
-
-After data is saved, the user's state is retained and available in any new browser session.
-
-Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as Single Page Applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/connect/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
-
-For more information, see the following resources:
-
-* <xref:blazor/call-web-api>
-* <xref:blazor/security/webassembly/index>
-* Blazor *Security and Identity* articles
-
-For more information on Azure data storage options, see the following:
-
-* [Azure Databases](https://azure.microsoft.com/product-categories/databases/)
-* [Azure Storage Documentation](/azure/storage/)
-
-<h2 id="url-wasm">URL</h2>
-
-For transient data representing navigation state, model the data as a part of the URL. Examples of user state modeled in the URL include:
-
-* The ID of a viewed entity.
-* The current page number in a paged grid.
-
-The contents of the browser's address bar are retained if the user manually reloads the page.
-
-For information on defining URL patterns with the [`@page`](xref:mvc/views/razor#page) directive, see <xref:blazor/fundamentals/routing>.
-
-<h2 id="browser-storage-wasm">Browser storage</h2>
-
-For transient data that the user is actively creating, a commonly used storage location is the browser's [`localStorage`](https://developer.mozilla.org/docs/Web/API/Window/localStorage) and [`sessionStorage`](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage) collections:
-
-* `localStorage` is scoped to the browser's window. If the user reloads the page or closes and re-opens the browser, the state persists. If the user opens multiple browser tabs, the state is shared across the tabs. Data persists in `localStorage` until explicitly cleared.
-* `sessionStorage` is scoped to the browser tab. If the user reloads the tab, the state persists. If the user closes the tab or the browser, the state is lost. If the user opens multiple browser tabs, each tab has its own independent version of the data.
-
-> [!NOTE]
-> `localStorage` and `sessionStorage` can be used in Blazor WebAssembly apps but only by writing custom code or using a third-party package.
-
-Generally, `sessionStorage` is safer to use. `sessionStorage` avoids the risk that a user opens multiple tabs and encounters the following:
-
-* Bugs in state storage across tabs.
-* Confusing behavior when a tab overwrites the state of other tabs.
-
-`localStorage` is the better choice if the app must persist state across closing and re-opening the browser.
-
-> [!WARNING]
-> Users may view or tamper with the data stored in `localStorage` and `sessionStorage`.
-
-<h2 id="in-memory-state-container-service-wasm">In-memory state container service</h2>
-
-[!INCLUDE[](~/blazor/includes/state-container.md)]
-
-## Additional resources
-
-* [Save app state before an authentication operation](xref:blazor/security/webassembly/additional-scenarios#save-app-state-before-an-authentication-operation)
-* <xref:blazor/call-web-api>
-* <xref:blazor/security/webassembly/index>
-
-::: zone-end
-
-::: zone pivot="server"
+:::zone pivot="server"
 
 Blazor Server is a stateful app framework. Most of the time, the app maintains a connection to the server. The user's state is held in the server's memory in a *circuit*. 
 
@@ -309,7 +205,7 @@ To disable prerendering, open the `Pages/_Host.cshtml` file and change the `rend
 <component type="typeof(App)" render-mode="Server" />
 ```
 
-[Prerendering of `<head>` content](xref:blazor/components/control-head-content) is disabled in `Pages/_Layout.cshtml`:
+[Prerendering of `<head>` content](xref:blazor/components/control-head-content) is disabled in [`<head>` content](xref:blazor/project-structure#location-of-head-content):
 
 ```cshtml
 <component type="typeof(HeadOutlet)" render-mode="Server" />
@@ -402,13 +298,16 @@ else
 }
 ```
 
+> [!NOTE]
+> For more information on <xref:Microsoft.AspNetCore.Components.RenderFragment>, see <xref:blazor/components/index#child-content-render-fragments>.
+
 The `CounterStateProvider` component handles the loading phase by not rendering its child content until state loading is complete.
 
 To use the `CounterStateProvider` component, wrap an instance of the component around any other component that requires access to the counter state. To make the state accessible to all components in an app, wrap the `CounterStateProvider` component around the <xref:Microsoft.AspNetCore.Components.Routing.Router> in the `App` component (`App.razor`):
 
 ```razor
 <CounterStateProvider>
-    <Router AppAssembly="@typeof(Program).Assembly">
+    <Router AppAssembly="@typeof(App).Assembly">
         ...
     </Router>
 </CounterStateProvider>
@@ -452,13 +351,9 @@ To persist many different state objects and consume different subsets of objects
 
 [!INCLUDE[](~/blazor/includes/state-container.md)]
 
-::: zone-end
+:::zone-end
 
-::: moniker-end
-
-::: moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
-
-::: zone pivot="webassembly"
+:::zone pivot="webassembly"
 
 User state created in a Blazor WebAssembly app is held in the browser's memory.
 
@@ -494,7 +389,8 @@ Common locations exist for persisting state:
 * [Server-side storage](#server-side-storage-wasm)
 * [URL](#url-wasm)
 * [Browser storage](#browser-storage-wasm)
-* [In-memory state container service](#in-memory-state-container-service-wasm)
+* [In-memory state container service](#in-memory-state-container-service-wasm) 
+* [Additional approaches](#additional-approaches-wasm)
 
 <h2 id="server-side-storage-wasm">Server-side storage</h2>
 
@@ -507,7 +403,7 @@ For permanent data persistence that spans multiple users and devices, the app ca
 
 After data is saved, the user's state is retained and available in any new browser session.
 
-Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as Single Page Applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/connect/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
+Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as single-page applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/connect/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
 
 For more information, see the following resources:
 
@@ -555,15 +451,28 @@ Generally, `sessionStorage` is safer to use. `sessionStorage` avoids the risk th
 
 [!INCLUDE[](~/blazor/includes/state-container.md)]
 
+<h2 id="additional-approaches-wasm">Additional approaches</h2>
+
+When implementing custom state storage, a useful approach is to adopt [cascading values and parameters](xref:blazor/components/cascading-values-and-parameters):
+
+* To consume state across many components.
+* If there's just one top-level state object to persist.
+
+For additional discussion and example approaches, see [Blazor: In-memory state container as cascading parameter (dotnet/AspNetCore.Docs #27296)](https://github.com/dotnet/AspNetCore.Docs/issues/27296).
+
 ## Additional resources
 
 * [Save app state before an authentication operation](xref:blazor/security/webassembly/additional-scenarios#save-app-state-before-an-authentication-operation)
 * <xref:blazor/call-web-api>
 * <xref:blazor/security/webassembly/index>
 
-::: zone-end
+:::zone-end
 
-::: zone pivot="server"
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::zone pivot="server"
 
 Blazor Server is a stateful app framework. Most of the time, the app maintains a connection to the server. The user's state is held in the server's memory in a *circuit*. 
 
@@ -840,6 +749,9 @@ else
 }
 ```
 
+> [!NOTE]
+> For more information on <xref:Microsoft.AspNetCore.Components.RenderFragment>, see <xref:blazor/components/index#child-content-render-fragments>.
+
 The `CounterStateProvider` component handles the loading phase by not rendering its child content until state loading is complete.
 
 To use the `CounterStateProvider` component, wrap an instance of the component around any other component that requires access to the counter state. To make the state accessible to all components in an app, wrap the `CounterStateProvider` component around the <xref:Microsoft.AspNetCore.Components.Routing.Router> in the `App` component (`App.razor`):
@@ -889,13 +801,9 @@ To persist many different state objects and consume different subsets of objects
 
 [!INCLUDE[](~/blazor/includes/state-container.md)]
 
-::: zone-end
+:::zone-end
 
-::: moniker-end
-
-::: moniker range="< aspnetcore-5.0"
-
-::: zone pivot="webassembly"
+:::zone pivot="webassembly"
 
 User state created in a Blazor WebAssembly app is held in the browser's memory.
 
@@ -909,7 +817,7 @@ Examples of user state held in browser memory include:
 When a user closes and re-opens their browser or reloads the page, user state held in the browser's memory is lost.
 
 > [!NOTE]
-> [Protected Browser Storage](xref:blazor/state-management?pivots=server#protected-browser-storage-experimental-nuget-package) (<xref:Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage?displayProperty=fullName> namespace) relies on ASP.NET Core Data Protection and is only supported for Blazor Server apps.
+> [Protected Browser Storage](xref:blazor/state-management?pivots=server#aspnet-core-protected-browser-storage) (<xref:Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage?displayProperty=fullName> namespace) relies on ASP.NET Core Data Protection and is only supported for Blazor Server apps.
 
 ## Persist state across browser sessions
 
@@ -932,6 +840,7 @@ Common locations exist for persisting state:
 * [URL](#url-wasm)
 * [Browser storage](#browser-storage-wasm)
 * [In-memory state container service](#in-memory-state-container-service-wasm)
+* [Additional approaches](#additional-approaches-wasm)
 
 <h2 id="server-side-storage-wasm">Server-side storage</h2>
 
@@ -944,7 +853,7 @@ For permanent data persistence that spans multiple users and devices, the app ca
 
 After data is saved, the user's state is retained and available in any new browser session.
 
-Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as Single Page Applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/connect/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
+Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as single-page applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/connect/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
 
 For more information, see the following resources:
 
@@ -992,15 +901,28 @@ Generally, `sessionStorage` is safer to use. `sessionStorage` avoids the risk th
 
 [!INCLUDE[](~/blazor/includes/state-container.md)]
 
+<h2 id="additional-approaches-wasm">Additional approaches</h2>
+
+When implementing custom state storage, a useful approach is to adopt [cascading values and parameters](xref:blazor/components/cascading-values-and-parameters):
+
+* To consume state across many components.
+* If there's just one top-level state object to persist.
+
+For additional discussion and example approaches, see [Blazor: In-memory state container as cascading parameter (dotnet/AspNetCore.Docs #27296)](https://github.com/dotnet/AspNetCore.Docs/issues/27296).
+
 ## Additional resources
 
 * [Save app state before an authentication operation](xref:blazor/security/webassembly/additional-scenarios#save-app-state-before-an-authentication-operation)
 * <xref:blazor/call-web-api>
 * <xref:blazor/security/webassembly/index>
 
-::: zone-end
+:::zone-end
 
-::: zone pivot="server"
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::zone pivot="server"
 
 Blazor Server is a stateful app framework. Most of the time, the app maintains a connection to the server. The user's state is held in the server's memory in a *circuit*. 
 
@@ -1107,6 +1029,9 @@ ASP.NET Core Protected Browser Storage leverages [ASP.NET Core Data Protection](
 ### Configuration
 
 1. Add a package reference to [`Microsoft.AspNetCore.ProtectedBrowserStorage`](https://www.nuget.org/packages/Microsoft.AspNetCore.ProtectedBrowserStorage).
+
+   [!INCLUDE[](~/includes/package-reference.md)]
+
 1. In the `Pages/_Host.cshtml` file, add the following script inside the closing `</body>` tag:
 
    ```cshtml
@@ -1291,6 +1216,9 @@ else
 }
 ```
 
+> [!NOTE]
+> For more information on <xref:Microsoft.AspNetCore.Components.RenderFragment>, see <xref:blazor/components/index#child-content-render-fragments>.
+
 The `CounterStateProvider` component handles the loading phase by not rendering its child content until state loading is complete.
 
 To use the `CounterStateProvider` component, wrap an instance of the component around any other component that requires access to the counter state. To make the state accessible to all components in an app, wrap the `CounterStateProvider` component around the <xref:Microsoft.AspNetCore.Components.Routing.Router> in the `App` component (`App.razor`):
@@ -1338,6 +1266,121 @@ To persist many different state objects and consume different subsets of objects
 
 [!INCLUDE[](~/blazor/includes/state-container.md)]
 
-::: zone-end
+:::zone-end
 
-::: moniker-end
+:::zone pivot="webassembly"
+
+User state created in a Blazor WebAssembly app is held in the browser's memory.
+
+Examples of user state held in browser memory include:
+
+* The hierarchy of component instances and their most recent render output in the rendered UI.
+* The values of fields and properties in component instances.
+* Data held in [dependency injection (DI)](xref:fundamentals/dependency-injection) service instances.
+* Values set through [JavaScript interop](xref:blazor/js-interop/call-javascript-from-dotnet) calls.
+
+When a user closes and re-opens their browser or reloads the page, user state held in the browser's memory is lost.
+
+> [!NOTE]
+> [Protected Browser Storage](xref:blazor/state-management?pivots=server#protected-browser-storage-experimental-nuget-package) (<xref:Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage?displayProperty=fullName> namespace) relies on ASP.NET Core Data Protection and is only supported for Blazor Server apps.
+
+## Persist state across browser sessions
+
+Generally, maintain state across browser sessions where users are actively creating data, not simply reading data that already exists.
+
+To preserve state across browser sessions, the app must persist the data to some other storage location than the browser's memory. State persistence isn't automatic. You must take steps when developing the app to implement stateful data persistence.
+
+Data persistence is typically only required for high-value state that users expended effort to create. In the following examples, persisting state either saves time or aids in commercial activities:
+
+* Multi-step web forms: It's time-consuming for a user to re-enter data for several completed steps of a multi-step web form if their state is lost. A user loses state in this scenario if they navigate away from the form and return later.
+* Shopping carts: Any commercially important component of an app that represents potential revenue can be maintained. A user who loses their state, and thus their shopping cart, may purchase fewer products or services when they return to the site later.
+
+An app can only persist *app state*. UIs can't be persisted, such as component instances and their render trees. Components and render trees aren't generally serializable. To persist UI state, such as the expanded nodes of a tree view control, the app must use custom code to model the behavior of the UI state as serializable app state.
+
+## Where to persist state
+
+Common locations exist for persisting state:
+
+* [Server-side storage](#server-side-storage-wasm)
+* [URL](#url-wasm)
+* [Browser storage](#browser-storage-wasm)
+* [In-memory state container service](#in-memory-state-container-service-wasm)
+* [Additional approaches](#additional-approaches-wasm)
+
+<h2 id="server-side-storage-wasm">Server-side storage</h2>
+
+For permanent data persistence that spans multiple users and devices, the app can use independent server-side storage accessed via a web API. Options include:
+
+* Blob storage
+* Key-value storage
+* Relational database
+* Table storage
+
+After data is saved, the user's state is retained and available in any new browser session.
+
+Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as single-page applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/connect/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
+
+For more information, see the following resources:
+
+* <xref:blazor/call-web-api>
+* <xref:blazor/security/webassembly/index>
+* Blazor *Security and Identity* articles
+
+For more information on Azure data storage options, see the following:
+
+* [Azure Databases](https://azure.microsoft.com/product-categories/databases/)
+* [Azure Storage Documentation](/azure/storage/)
+
+<h2 id="url-wasm">URL</h2>
+
+For transient data representing navigation state, model the data as a part of the URL. Examples of user state modeled in the URL include:
+
+* The ID of a viewed entity.
+* The current page number in a paged grid.
+
+The contents of the browser's address bar are retained if the user manually reloads the page.
+
+For information on defining URL patterns with the [`@page`](xref:mvc/views/razor#page) directive, see <xref:blazor/fundamentals/routing>.
+
+<h2 id="browser-storage-wasm">Browser storage</h2>
+
+For transient data that the user is actively creating, a commonly used storage location is the browser's [`localStorage`](https://developer.mozilla.org/docs/Web/API/Window/localStorage) and [`sessionStorage`](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage) collections:
+
+* `localStorage` is scoped to the browser's window. If the user reloads the page or closes and re-opens the browser, the state persists. If the user opens multiple browser tabs, the state is shared across the tabs. Data persists in `localStorage` until explicitly cleared.
+* `sessionStorage` is scoped to the browser tab. If the user reloads the tab, the state persists. If the user closes the tab or the browser, the state is lost. If the user opens multiple browser tabs, each tab has its own independent version of the data.
+
+> [!NOTE]
+> `localStorage` and `sessionStorage` can be used in Blazor WebAssembly apps but only by writing custom code or using a third-party package.
+
+Generally, `sessionStorage` is safer to use. `sessionStorage` avoids the risk that a user opens multiple tabs and encounters the following:
+
+* Bugs in state storage across tabs.
+* Confusing behavior when a tab overwrites the state of other tabs.
+
+`localStorage` is the better choice if the app must persist state across closing and re-opening the browser.
+
+> [!WARNING]
+> Users may view or tamper with the data stored in `localStorage` and `sessionStorage`.
+
+<h2 id="in-memory-state-container-service-wasm">In-memory state container service</h2>
+
+[!INCLUDE[](~/blazor/includes/state-container.md)]
+
+<h2 id="additional-approaches-wasm">Additional approaches</h2>
+
+When implementing custom state storage, a useful approach is to adopt [cascading values and parameters](xref:blazor/components/cascading-values-and-parameters):
+
+* To consume state across many components.
+* If there's just one top-level state object to persist.
+
+For additional discussion and example approaches, see [Blazor: In-memory state container as cascading parameter (dotnet/AspNetCore.Docs #27296)](https://github.com/dotnet/AspNetCore.Docs/issues/27296).
+
+## Additional resources
+
+* [Save app state before an authentication operation](xref:blazor/security/webassembly/additional-scenarios#save-app-state-before-an-authentication-operation)
+* <xref:blazor/call-web-api>
+* <xref:blazor/security/webassembly/index>
+
+:::zone-end
+
+:::moniker-end

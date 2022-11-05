@@ -6,27 +6,22 @@ monikerRange: '>= aspnetcore-3.1'
 ms.author: riande
 ms.custom: mvc
 ms.date: 1/1/2022
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: performance/caching/middleware
 ---
 # Response Caching Middleware in ASP.NET Core
 
 By [John Luo](https://github.com/JunTaoLuo) and [Rick Anderson](https://twitter.com/RickAndMSFT)
 
-::: moniker range=">= aspnetcore-6.0"
+:::moniker range=">= aspnetcore-6.0"
 
 This article explains how to configure [Response Caching Middleware](https://github.com/dotnet/aspnetcore/blob/main/src/Middleware/ResponseCaching/src/ResponseCachingMiddleware.cs) in an ASP.NET Core app. The middleware determines when responses are cacheable, stores responses, and serves responses from cache. For an introduction to HTTP caching and the [`[ResponseCache]`](xref:Microsoft.AspNetCore.Mvc.ResponseCacheAttribute) attribute, see [Response Caching](xref:performance/caching/response).
 
-The Response caching middleware:
-
-* Implements the standard HTTP caching semantics, that is it caches based on HTTP cache headers like proxies do.
-* Is typically not beneficial for UI apps such as Razor Pages. Output caching is being considered for the next version of ASP.NET Core, which will benefit UI apps. With output caching, configuration decides what should be cached independently of HTTP headers. For more information, see [this GitHub issue](https://github.com/dotnet/aspnetcore/issues/27387).
-* May be beneficial for public GET or HEAD API requests from clients where the [Conditions for caching](#cfc) are met.
+[!INCLUDE[](~/includes/response-caching-mid.md)]
 
 <!--Postman:  GET: Headers > Postman > go to settings > uncheck Send no-cache header -->
 ## Configuration
 
-In `Program.cs`, add the Response Caching Middleware services to the service collection and configure the app to use the middleware with the <xref:Microsoft.AspNetCore.Builder.ResponseCachingExtensions.UseResponseCaching%2A> extension method. `UseResponseCaching` adds the middleware to the request processing pipeline:
+In `Program.cs`, add the Response Caching Middleware services <xref:Microsoft.Extensions.DependencyInjection.ResponseCachingServicesExtensions.AddResponseCaching%2A> to the service collection and configure the app to use the middleware with the <xref:Microsoft.AspNetCore.Builder.ResponseCachingExtensions.UseResponseCaching%2A> extension method. `UseResponseCaching` adds the middleware to the request processing pipeline:
 
 [!code-csharp[](middleware/samples/6.x/ResponseCachingMiddleware/Program.cs?name=snippet2&highlight=3,12)]
 
@@ -157,9 +152,9 @@ When testing and troubleshooting caching behavior, a browser typically sets requ
 * <xref:mvc/views/tag-helpers/builtin-th/cache-tag-helper>
 * <xref:mvc/views/tag-helpers/builtin-th/distributed-cache-tag-helper>
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range="< aspnetcore-6.0"
+:::moniker range="< aspnetcore-6.0"
 
 This article explains how to configure Response Caching Middleware in an ASP.NET Core app. The middleware determines when responses are cacheable, stores responses, and serves responses from cache. For an introduction to HTTP caching and the [`[ResponseCache]`](xref:Microsoft.AspNetCore.Mvc.ResponseCacheAttribute) attribute, see [Response Caching](xref:performance/caching/response).
 
@@ -304,4 +299,4 @@ When testing and troubleshooting caching behavior, a browser may set request hea
 * <xref:mvc/views/tag-helpers/builtin-th/cache-tag-helper>
 * <xref:mvc/views/tag-helpers/builtin-th/distributed-cache-tag-helper>
 
-::: moniker-end
+:::moniker-end

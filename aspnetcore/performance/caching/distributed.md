@@ -6,14 +6,13 @@ monikerRange: '>= aspnetcore-3.1'
 ms.author: riande
 ms.custom: mvc
 ms.date: 1/3/2022
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: performance/caching/distributed
 ---
 # Distributed caching in ASP.NET Core
 
 By [Mohsin Nasir](https://github.com/mohsinnasir) and [smandia](https://github.com/smandia)
 
-::: moniker range=">= aspnetcore-6.0"
+:::moniker range=">= aspnetcore-6.0"
 
 A distributed cache is a cache shared by multiple app servers, typically maintained as an external service to the app servers that access it. A distributed cache can improve the performance and scalability of an ASP.NET Core app, especially when the app is hosted by a cloud service or a server farm.
 
@@ -96,7 +95,7 @@ The sample app implements <xref:Microsoft.Extensions.Caching.SqlServer.SqlServer
 [!code-csharp[](distributed/samples/6.x/DistCacheSample/Program.cs?name=snippet_AddDistributedSqlServerCache)]
 
 > [!NOTE]
-> A <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.ConnectionString*> (and optionally, <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.SchemaName*> and <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.TableName*>) are typically stored outside of source control (for example, stored by the [Secret Manager](xref:security/app-secrets) or in *appsettings.json*/*appsettings.{ENVIRONMENT}.json* files). The connection string may contain credentials that should be kept out of source control systems.
+> A <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.ConnectionString*> (and optionally, <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.SchemaName*> and <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.TableName*>) are typically stored outside of source control (for example, stored by the [Secret Manager](xref:security/app-secrets) or in `appsettings.json`/`appsettings.{Environment}.json` files). The connection string may contain credentials that should be kept out of source control systems.
 
 ### Distributed Redis Cache
 
@@ -181,9 +180,9 @@ When SQL Server is used as a distributed cache backing store, use of the same da
 * <xref:mvc/views/tag-helpers/builtin-th/distributed-cache-tag-helper>
 * <xref:host-and-deploy/web-farm>
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range="< aspnetcore-6.0"
+:::moniker range="< aspnetcore-6.0"
 
 A distributed cache is a cache shared by multiple app servers, typically maintained as an external service to the app servers that access it. A distributed cache can improve the performance and scalability of an ASP.NET Core app, especially when the app is hosted by a cloud service or a server farm.
 
@@ -266,7 +265,7 @@ The sample app implements <xref:Microsoft.Extensions.Caching.SqlServer.SqlServer
 [!code-csharp[](distributed/samples/3.x/DistCacheSample/Startup.cs?name=snippet_AddDistributedSqlServerCache)]
 
 > [!NOTE]
-> A <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.ConnectionString*> (and optionally, <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.SchemaName*> and <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.TableName*>) are typically stored outside of source control (for example, stored by the [Secret Manager](xref:security/app-secrets) or in *appsettings.json*/*appsettings.{ENVIRONMENT}.json* files). The connection string may contain credentials that should be kept out of source control systems.
+> A <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.ConnectionString*> (and optionally, <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.SchemaName*> and <xref:Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.TableName*>) are typically stored outside of source control (for example, stored by the [Secret Manager](xref:security/app-secrets) or in `appsettings.json`/`appsettings.{Environment}.json` files). The connection string may contain credentials that should be kept out of source control systems.
 
 ### Distributed Redis Cache
 
@@ -359,4 +358,4 @@ When SQL Server is used as a distributed cache backing store, use of the same da
 * <xref:mvc/views/tag-helpers/builtin-th/distributed-cache-tag-helper>
 * <xref:host-and-deploy/web-farm>
 
-::: moniker-end
+:::moniker-end

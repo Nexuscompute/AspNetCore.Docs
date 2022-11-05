@@ -15,6 +15,8 @@ items:
     uid: getting-started
   - name: What's new
     items:
+      - name: What's new in 7.0
+        uid: aspnetcore-7
       - name: What's new in 6.0
         uid: aspnetcore-6.0
       - name: What's new in 5.0
@@ -83,14 +85,7 @@ items:
               - name: Examine Details and Delete
                 uid: tutorials/first-mvc-app/details
           - name: Blazor
-            displayName: tutorial
-            items:
-              - name: Build your first Blazor app
-                href: https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/intro
-              - name: Build a Blazor todo list app
-                uid: tutorials/build-a-blazor-app
-              - name: SignalR with Blazor
-                uid: tutorials/signalr-blazor
+            uid: blazor/tutorials/index
       - name: Web API apps
         items:
           - name: Create a web API with controllers
@@ -121,7 +116,7 @@ items:
             uid: tutorials/signalr-typescript-webpack
           - name: SignalR with Blazor
             displayName: tutorial
-            uid: tutorials/signalr-blazor
+            uid: blazor/tutorials/signalr-blazor
       - name: Remote Procedure Call apps
         items:
           - name: Get started with a gRPC service
@@ -172,43 +167,43 @@ items:
                 uid: data/ef-mvc/inheritance
               - name: Advanced topics
                 uid: data/ef-mvc/advanced
-      - name: Microsoft Learn modules
+      - name: Learn modules
         items:
           - name: Web apps >>
             displayName: tutorial, razor, razor pages, ui
-            href: /learn/modules/create-razor-pages-aspnet-core/
+            href: /training/modules/create-razor-pages-aspnet-core/
           - name: Web API apps >>
             displayName: tutorial
-            href: /learn/modules/build-web-api-aspnet-core/
+            href: /training/modules/build-web-api-aspnet-core/
           - name: Cloud-native microservices
             items:
               - name: Create and deploy >>
                 displayName: tutorial, kubernetes, aks, acr, docker
-                href: /learn/modules/microservices-aspnet-core/
+                href: /training/modules/microservices-aspnet-core/
               - name: Implement resiliency >>
                 displayName: tutorial, kubernetes, aks, acr, docker
-                href: /learn/modules/microservices-resiliency-aspnet-core/
+                href: /training/modules/microservices-resiliency-aspnet-core/
               - name: Deploy with GitHub Actions >>
                 displayName: tutorial, kubernetes, aks, acr, docker, devops
-                href: /learn/modules/microservices-devops-aspnet-core/
+                href: /training/modules/microservices-devops-aspnet-core/
               - name: Log and monitor >>
                 displayName: tutorial, kubernetes, aks, acr, docker, serilog
-                href: /learn/modules/microservices-logging-aspnet-core/
+                href: /training/modules/microservices-logging-aspnet-core/
               - name: Implement feature flags >>
                 displayName: tutorial, kubernetes, aks, acr, docker
-                href: /learn/modules/microservices-configuration-aspnet-core/
+                href: /training/modules/microservices-configuration-aspnet-core/
               - name: Use managed data stores >>
                 displayName: tutorial, kubernetes, aks, acr, docker
-                href: /learn/modules/microservices-data-aspnet-core/
+                href: /training/modules/microservices-data-aspnet-core/
               - name: Implement API gateways >>
                 displayName: tutorial, kubernetes, aks, acr, docker
-                href: /learn/modules/microservices-apigateway-aspnet-core/
+                href: /training/modules/microservices-apigateway-aspnet-core/
           - name: Data access >>
             displayName: tutorial, ef, entity framework
-            href: /learn/modules/persist-data-ef-core/
+            href: /training/modules/persist-data-ef-core/
           - name: Web app security >>
             displayName: tutorial, identity
-            href: /learn/modules/secure-aspnet-core-identity/
+            href: /training/modules/secure-aspnet-core-identity/
   - name: Fundamentals
     items:
       - name: Overview
@@ -218,7 +213,29 @@ items:
       - name: Dependency injection (services)
         uid: fundamentals/dependency-injection
       - name: Middleware
-        uid: fundamentals/middleware/index
+        items: 
+          - name: Middleware overview
+            uid: fundamentals/middleware/index
+          - name: Rate limiting middleware
+            uid: performance/rate-limit
+          - name: Middleware in Minimal API apps
+            uid: fundamentals/minimal-apis/middleware
+          - name: Test middleware
+            uid: test/middleware
+          - name: Response caching middleware
+            uid: performance/caching/middleware
+          - name: Write middleware
+            uid: fundamentals/middleware/write
+          - name: Request and response operations
+            displayName: middleware
+            uid: fundamentals/middleware/request-response
+          - name: Request decompression
+            displayName: request decompression middleware
+            uid: fundamentals/middleware/request-decompression
+          - name: Factory-based middleware
+            uid: fundamentals/middleware/extensibility
+          - name: Factory-based middleware with third-party container
+            uid: fundamentals/middleware/extensibility-third-party-container
       - name: Host
         items:
           - name: Generic Host
@@ -239,6 +256,8 @@ items:
         uid: fundamentals/http-logging/index
       - name: W3C Logger
         uid: fundamentals/w3c-logger/index
+      - name: HttpContext
+        uid: fundamentals/use-httpcontext
       - name: Routing
         uid: fundamentals/routing
       - name: Handle errors
@@ -324,18 +343,60 @@ items:
         items:
           - name: Overview
             uid: blazor/index
-          - name: Tutorials
-            uid: blazor/tutorials
           - name: Supported platforms
             uid: blazor/supported-platforms
           - name: Tooling
             uid: blazor/tooling
+          - name: Tutorials
+            items:
+              - name: Overview
+                uid: blazor/tutorials/index
+              - name: Build your first Blazor app
+                href: https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/intro
+              - name: Build a Blazor todo list app
+                uid: blazor/tutorials/build-a-blazor-app
+              - name: SignalR with Blazor
+                uid: blazor/tutorials/signalr-blazor
+              - name: Learn modules
+                href: /training/paths/build-web-apps-with-blazor/
           - name: Hosting models
             uid: blazor/hosting-models
+          - name: Blazor Hybrid
+            items:
+              - name: Overview
+                uid: blazor/hybrid/index
+              - name: Tutorials
+                items:
+                  - name: Overview
+                    uid: blazor/hybrid/tutorials/index
+                  - name: .NET MAUI
+                    uid: blazor/hybrid/tutorials/maui
+                  - name: Windows Forms
+                    uid: blazor/hybrid/tutorials/windows-forms
+                  - name: WPF
+                    uid: blazor/hybrid/tutorials/wpf
+              - name: Routing and navigation
+                uid: blazor/hybrid/routing
+              - name: Static files
+                uid: blazor/hybrid/static-files
+              - name: Browser developer tools
+                uid: blazor/hybrid/developer-tools
+              - name: Reuse Razor components
+                uid: blazor/hybrid/reuse-razor-components
+              - name: Class libraries
+                uid: blazor/hybrid/class-libraries
+              - name: Security and Identity
+                items:
+                  - name: Overview
+                    uid: blazor/hybrid/security/index
+                  - name: Security considerations
+                    uid: blazor/hybrid/security/security-considerations
           - name: Project structure
             uid: blazor/project-structure
           - name: Fundamentals
             items:
+              - name: Overview
+                uid: blazor/fundamentals/index
               - name: Routing and navigation
                 uid: blazor/fundamentals/routing
               - name: Configuration
@@ -370,6 +431,8 @@ items:
                 uid: blazor/components/event-handling
               - name: Lifecycle
                 uid: blazor/components/lifecycle
+              - name: Virtualization
+                uid: blazor/components/virtualization
               - name: Rendering
                 uid: blazor/components/rendering
               - name: Templated components
@@ -386,8 +449,8 @@ items:
                 uid: blazor/components/built-in-components
           - name: Globalization and localization
             uid: blazor/globalization-localization
-          - name: Forms and validation
-            uid: blazor/forms-validation
+          - name: Forms and input components
+            uid: blazor/forms-and-input-components
           - name: File uploads
             uid: blazor/file-uploads
           - name: File downloads
@@ -396,10 +459,12 @@ items:
             items:
               - name: Overview
                 uid: blazor/js-interop/index
-              - name: Call JavaScript from .NET
+              - name: Call JS from .NET
                 uid: blazor/js-interop/call-javascript-from-dotnet
-              - name: Call .NET from JavaScript
+              - name: Call .NET from JS
                 uid: blazor/js-interop/call-dotnet-from-javascript
+              - name: JSImport/JSExport interop
+                uid: blazor/js-interop/import-export-interop
           - name: Call a web API
             uid: blazor/call-web-api
           - name: Images
@@ -408,6 +473,14 @@ items:
             items:
               - name: Overview
                 uid: blazor/security/index
+              - name: Blazor Server
+                items:
+                  - name: Overview
+                    uid: blazor/security/server/index
+                  - name: Threat mitigation
+                    uid: blazor/security/server/threat-mitigation
+                  - name: Additional scenarios
+                    uid: blazor/security/server/additional-scenarios
               - name: Blazor WebAssembly
                 items:
                   - name: Overview
@@ -428,16 +501,10 @@ items:
                     uid: blazor/security/webassembly/hosted-with-identity-server
                   - name: Additional scenarios
                     uid: blazor/security/webassembly/additional-scenarios
+                  - name: AAD groups and roles
+                    uid: blazor/security/webassembly/aad-groups-roles
                   - name: Graph API
                     uid: blazor/security/webassembly/graph-api
-              - name: Blazor Server
-                items:
-                  - name: Overview
-                    uid: blazor/security/server/index
-                  - name: Threat mitigation
-                    uid: blazor/security/server/threat-mitigation
-                  - name: Additional scenarios
-                    uid: blazor/security/server/additional-scenarios
               - name: Content Security Policy
                 uid: blazor/security/content-security-policy
           - name: State management
@@ -458,16 +525,18 @@ items:
             items:
               - name: Overview
                 uid: blazor/host-and-deploy/index
-              - name: Blazor WebAssembly
-                uid: blazor/host-and-deploy/webassembly
               - name: Blazor Server
                 uid: blazor/host-and-deploy/server
+              - name: Blazor WebAssembly
+                uid: blazor/host-and-deploy/webassembly
               - name: Configure the Linker
                 uid: blazor/host-and-deploy/configure-linker
               - name: Configure the Trimmer
                 uid: blazor/host-and-deploy/configure-trimmer
               - name: WebAssembly deployment layout
                 uid: blazor/host-and-deploy/webassembly-deployment-layout
+              - name: Multiple hosted WebAssembly apps
+                uid: blazor/host-and-deploy/multiple-hosted-webassembly
           - name: Blazor Server and EF Core
             uid: blazor/blazor-server-ef-core
           - name: Advanced scenarios
@@ -492,6 +561,8 @@ items:
                 uid: client-side/libman/libman-cli
               - name: Visual Studio
                 uid: client-side/libman/libman-vs
+          - name: Run .NET from JavaScript
+            uid: client-side/dotnet-interop
           - name: Grunt
             uid: client-side/using-grunt
           - name: Bundle and minify
@@ -571,6 +642,8 @@ items:
             uid: mvc/views/view-components
           - name: View compilation
             uid: mvc/views/view-compilation
+          - name: Display and Editor Templates
+            uid: mvc/views/display-templates
           - name: Upload files
             uid: mvc/models/file-uploads
           - name: Web SDK
@@ -615,6 +688,8 @@ items:
         uid: web-api/advanced/conventions
       - name: Handle errors
         uid: web-api/handle-errors
+      - name: Port tunneling in VS to debug web APIs
+        href: /connectors/custom-connectors/port-tunneling
       - name: Test with HttpRepl
         items:
           - name: Overview
@@ -622,11 +697,35 @@ items:
           - name: Telemetry
             uid: web-api/http-repl/telemetry
   - name: Minimal APIs
-    uid: fundamentals/minimal-apis
+    items:
+      - name: Minimal APIs quick reference
+        uid: fundamentals/minimal-apis
+      - name: WebApplication and WebApplicationBuilder
+        uid: fundamentals/minimal-apis/webapplication
+      - name: Route Handlers
+        uid: fundamentals/minimal-apis/route-handlers
+      - name: Parameter binding
+        uid: fundamentals/minimal-apis/parameter-binding
+      - name: Create responses
+        uid: fundamentals/minimal-apis/responses
+      - name: OpenAPI
+        uid: fundamentals/minimal-apis/openapi
+      - name: Port tunneling in VS to debug web APIs
+        href: /connectors/custom-connectors/port-tunneling
+      - name: Filters
+        uid: fundamentals/minimal-apis/min-api-filters
+      - name: Unit and integration tests
+        uid: fundamentals/minimal-apis/test-min-api
+      - name: Middleware
+        uid: fundamentals/minimal-apis/middleware
+      - name: Handle errors
+        uid: fundamentals/minimal-apis/handle-errors
+      - name: Authentication and authorization
+        uid: fundamentals/minimal-apis/security
   - name: Real-time apps
     displayName: signalr
     items:
-      - name: SignalR overview
+      - name: Overview
         uid: signalr/introduction
       - name: Supported platforms
         uid: signalr/supported-platforms
@@ -638,7 +737,7 @@ items:
           - name: SignalR with TypeScript
             uid: tutorials/signalr-typescript-webpack
           - name: SignalR with Blazor
-            uid: tutorials/signalr-blazor
+            uid: blazor/tutorials/signalr-blazor
       - name: Samples
         href: https://github.com/aspnet/SignalR-samples
         displayName: signalr
@@ -676,13 +775,13 @@ items:
             uid: signalr/java-client
             displayName: signalr
           - name: Java API reference
-            href: /java/api/com.microsoft.signalr?view=aspnet-signalr-java
+            href: /java/api/com.microsoft.signalr
             displayName: signalr
           - name: JavaScript client
             uid: signalr/javascript-client
             displayName: signalr
           - name: JavaScript API reference
-            href: /javascript/api/?view=signalr-js-latest
+            href: /javascript/api/@microsoft/signalr/
             displayName: signalr
       - name: Host and scale
         displayName: signalr
@@ -734,7 +833,7 @@ items:
             href: https://github.com/aspnet/AspNetCore/blob/main/src/SignalR/docs/specs/TransportProtocols.md
   - name: Remote Procedure Call apps
     items:
-      - name: Introduction to gRPC services
+      - name: Overview
         uid: grpc/index
       - name: Tutorials
         items:
@@ -744,19 +843,19 @@ items:
         items:
           - name: Overview
             uid: grpc/basics
-          - name: Create gRPC services
+          - name: Create services
             uid: grpc/services
           - name: Create Protobuf messages
             uid: grpc/protobuf
-          - name: Versioning gRPC services
+          - name: Version services
             uid: grpc/versioning
-          - name: Test gRPC services
+          - name: Test services
             uid: grpc/test-services
       - name: Call gRPC services with C#
         items:
           - name: Overview
             uid: grpc/client
-          - name: gRPC client factory integration
+          - name: Client factory integration
             uid: grpc/clientfactory
           - name: Deadlines and cancellation
             uid: grpc/deadlines-cancellation
@@ -766,18 +865,32 @@ items:
             uid: grpc/loadbalancing
           - name: .NET Standard 2.0 support
             uid: grpc/netstandard
-          - name: Mock gRPC client in tests
+          - name: Mock client in tests
             uid: grpc/test-client
       - name: gRPC services with ASP.NET Core
         uid: grpc/aspnetcore
       - name: Supported platforms
         uid: grpc/supported-platforms
       - name: Use gRPC in browser apps
-        uid: grpc/browser
+        items:
+          - name: Overview
+            uid: grpc/browser
+          - name: gRPC-Web
+            uid: grpc/grpcweb
+          - name: gRPC JSON transcoding
+            items:
+              - name: Overview
+                uid: grpc/json-transcoding
+              - name: HTTP rules and JSON
+                uid: grpc/json-transcoding-binding
+              - name: Swagger / OpenAPI
+                uid: grpc/json-transcoding-openapi
       - name: Configuration
         uid: grpc/configuration
       - name: Authentication and authorization
         uid: grpc/authn-and-authz
+      - name: gRPC interceptors
+        uid: grpc/interceptors
       - name: Logging and diagnostics
         uid: grpc/diagnostics
       - name: Security considerations
@@ -786,15 +899,15 @@ items:
         uid: grpc/performance
       - name: Inter-process communication
         uid: grpc/interprocess
-      - name: Create JSON Web APIs from gRPC
-        uid: grpc/httpapi
-      - name: Code-first gRPC services and clients
+      - name: Code-first services and clients
         uid: grpc/code-first
+      - name: gRPC health checks
+        uid: grpc/health-checks
       - name: Manage Protobuf references with dotnet-grpc
         uid: grpc/dotnet-grpc
-      - name: Test gRPC services with gRPCurl
+      - name: Test services with Postman and gRPCurl
         uid: grpc/test-tools
-      - name: Migrate gRPC services from C-core
+      - name: Migrate from C-core to gRPC for .NET
         uid: grpc/migration
       - name: Why migrate WCF to ASP.NET Core gRPC
         uid: grpc/wcf
@@ -808,10 +921,16 @@ items:
     items:
       - name: .NET Hot Reload
         uid: test/hot-reload
+      - name: Debug .NET and ASP.NET Core source code
+        uid: test/debug-aspnetcore-source
       - name: Razor Pages unit tests
         uid: test/razor-pages-tests
-      - name: Test controllers
+      - name: MVC controllers unit tests
         uid: mvc/controllers/testing
+      - name: Integration tests
+        uid: test/integration-tests
+      - name: Testing Minimal API
+        uid: fundamentals/minimal-apis/test-min-api
       - name: Test middleware
         uid: test/middleware
       - name: Remote debugging
@@ -820,8 +939,8 @@ items:
         href: /azure/azure-monitor/app/snapshot-debugger?toc=/aspnet/core/toc.json&bc=/aspnet/core/breadcrumb/toc.json
       - name: Snapshot debugging in Visual Studio
         href: /visualstudio/debugger/debug-live-azure-applications
-      - name: Integration tests
-        uid: test/integration-tests
+      - name: Port tunneling in VS to debug web APIs
+        href: /connectors/custom-connectors/port-tunneling
       - name: Load and stress testing
         uid: test/loadtests
       - name: Troubleshoot and debug
@@ -957,7 +1076,7 @@ items:
           - name: Continuous deployment with Azure Pipelines
             displayName: azure, deploy, publish
             href: /azure/devops/pipelines/get-started-yaml
-          - name: ASP.NET Core Module
+          - name: ASP.NET Core Module (ANCM) for IIS
             displayName: azure, deploy, publish
             uid: host-and-deploy/aspnet-core-module
           - name: Troubleshoot
@@ -973,7 +1092,7 @@ items:
             href: /dotnet/architecture/devops-for-aspnet-developers
           - name: Tools and downloads
             displayName: azure, deploy, publish
-            href: /dotnet/architecture/devops-for-aspnet-developers/tool-and-downloads
+            href: /dotnet/architecture/devops-for-aspnet-developers/tools-and-downloads
           - name: Deploy to App Service
             displayName: azure, deploy, publish
             href: /dotnet/architecture/devops-for-aspnet-developers/deploying-to-app-service
@@ -1099,6 +1218,9 @@ items:
       - name: Proxy and load balancer configuration
         displayName: deploy, publish
         uid: host-and-deploy/proxy-load-balancer
+      - name: Scaling apps on Azure
+        displayName: azure, deploy, publish, scale
+        uid: host-and-deploy/scaling-aspnet-apps/scaling-aspnet-apps
       - name: Web farm
         displayName: deploy, publish
         uid: host-and-deploy/web-farm
@@ -1175,6 +1297,9 @@ items:
             uid: security/authentication/cookie
           - name: Use social authentication without Identity
             uid: security/authentication/social/social-without-identity
+          - name: Manage JWTs in development
+            displayName: jwt, JSON WEB Token
+            uid: security/authentication/jwt
           - name: Azure Active Directory
             items:
               - name: Overview
@@ -1198,9 +1323,9 @@ items:
                   - name: Sign-in users and call web APIs using Azure AD V2
                     href: /samples/azure-samples/active-directory-aspnetcore-webapp-openidconnect-v2/enable-webapp-signin/
                   - name: Calling an ASP.NET Core 2.0 Web API from a WPF application using Azure AD V2
-                    href: /samples/azure-samples/active-directory-dotnet-native-aspnetcore-v2/calling-an-aspnet-core-web-api-from-a-wpf-application-using-azure-ad-v2/
+                    href: https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2/tree/master/1.%20Desktop%20app%20calls%20Web%20API
                   - name: Web API with Azure AD B2C
-                    href: https://azure.microsoft.com/resources/samples/active-directory-b2c-dotnetcore-webapi/
+                    href: /samples/azure-samples/active-directory-aspnetcore-webapp-openidconnect-v2/how-to-secure-a-web-api-built-with-aspnet-core-using-the-azure-ad-b2c/
           - name: Secure ASP.NET Core apps with Duende Identity Server
             href: https://docs.duendesoftware.com
           - name: Secure ASP.NET Core apps with IdentityServer4
@@ -1317,6 +1442,9 @@ items:
           - name: Protect secrets in development
             displayName: password, connection string, API key
             uid: security/app-secrets
+          - name: Manage JWTs in development
+            displayName: jwt, JSON WEB Token
+            uid: security/authentication/jwt
           - name: Azure Key Vault Configuration Provider
             displayName: password, connection string, API key, secrets
             uid: security/key-vault-configuration
@@ -1353,19 +1481,29 @@ items:
       - name: Application security - OWASP
         href: https://cheatsheetseries.owasp.org/cheatsheets/DotNet_Security_Cheat_Sheet.html
   - name: Performance
+    displayName: Performance Best Practices
     items:
       - name: Overview
         uid: performance/performance-best-practices
+      - name: Rate limiting middleware
+        uid: performance/rate-limit
       - name: Memory and GC
         uid: performance/memory
+      - name: Scaling apps on Azure
+        displayName: azure, deploy, publish, scale
+        uid: host-and-deploy/scaling-aspnet-apps/scaling-aspnet-apps
       - name: Caching
         items:
           - name: Overview
-            uid: performance/caching/response
+            uid: performance/caching/overview
           - name: In-memory cache
             uid: performance/caching/memory
           - name: Distributed caching
             uid: performance/caching/distributed
+          - name: Output caching
+            uid: performance/caching/output
+          - name: Response caching
+            uid: performance/caching/response
           - name: Response caching middleware
             uid: performance/caching/middleware
           - name: Object reuse with ObjectPool
@@ -1406,6 +1544,9 @@ items:
       - name: Request and response operations
         displayName: middleware
         uid: fundamentals/middleware/request-response
+      - name: Request decompression
+        displayName: request decompression middleware
+        uid: fundamentals/middleware/request-decompression
       - name: URL rewriting
         uid: fundamentals/url-rewriting
       - name: File providers
@@ -1439,6 +1580,9 @@ items:
         uid: fundamentals/middleware/extensibility-third-party-container
   - name: Migration
     items:
+      - name: 6.0 to 7.0
+        displayName: migrate, migration
+        uid: migration/60-to-70
       - name: 5.0 to 6.0
         displayName: migrate, migration
         uid: migration/50-to-60
@@ -1493,6 +1637,6 @@ items:
         displayName: migrate, migration
         uid: migration/logging-nonaspnetcore
   - name: API reference
-    href: /dotnet/api/?view=aspnetcore-2.2
+    href: /dotnet/api/
   - name: Contribute
     href: https://github.com/dotnet/AspNetCore.Docs/blob/main/CONTRIBUTING.md

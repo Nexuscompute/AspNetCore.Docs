@@ -5,15 +5,12 @@ description: Learn the basic concepts when writing gRPC services with C#.
 monikerRange: '>= aspnetcore-3.0'
 ms.author: jamesnk
 ms.date: 09/29/2021
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: grpc/basics
 ---
 # gRPC services with C\#
 
-::: moniker range=">= aspnetcore-6.0"
+:::moniker range=">= aspnetcore-6.0"
 This document outlines the concepts needed to write [gRPC](https://grpc.io/docs/guides/) apps in C#. The topics covered here apply to both [C-core](https://grpc.io/blog/grpc-stacks)-based and ASP.NET Core-based gRPC apps.
-
-[!INCLUDE[](~/includes/gRPCazure.md)]
 
 ## proto file
 
@@ -86,12 +83,10 @@ Similarly, the attribute is set to `Client` in client projects.
 * <xref:tutorials/grpc/grpc-start>
 * <xref:grpc/aspnetcore>
 * <xref:grpc/client>
-::: moniker-end
+:::moniker-end
 
-::: moniker range=">= aspnetcore-3.0 < aspnetcore-6.0"
+:::moniker range=">= aspnetcore-3.0 < aspnetcore-6.0"
 This document outlines the concepts needed to write [gRPC](https://grpc.io/docs/guides/) apps in C#. The topics covered here apply to both [C-core](https://grpc.io/blog/grpc-stacks)-based and ASP.NET Core-based gRPC apps.
-
-[!INCLUDE[](~/includes/gRPCazure.md)]
 
 ## proto file
 
@@ -164,4 +159,4 @@ Similarly, the attribute is set to `Client` in client projects.
 * <xref:tutorials/grpc/grpc-start>
 * <xref:grpc/aspnetcore>
 * <xref:grpc/client>
-::: moniker-end
+:::moniker-end

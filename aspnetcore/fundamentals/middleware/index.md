@@ -6,7 +6,6 @@ monikerRange: '>= aspnetcore-3.0'
 ms.author: riande
 ms.custom: mvc
 ms.date: 10/11/2021
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: fundamentals/middleware/index
 ---
 # ASP.NET Core Middleware
@@ -88,9 +87,9 @@ The **Routing** middleware in the preceding diagram is shown following **Static 
 
 ![ASP.NET Core filter pipeline](index/_static/mvc-endpoint.svg)
 
-The order that middleware components are added in the *Program.cs* file defines the order in which the middleware components are invoked on requests and the reverse order for the response. The order is **critical** for security, performance, and functionality.
+The order that middleware components are added in the `Program.cs` file defines the order in which the middleware components are invoked on requests and the reverse order for the response. The order is **critical** for security, performance, and functionality.
 
-The following highlighted code in *Program.cs* adds security-related middleware components in the typical recommended order:
+The following highlighted code in `Program.cs` adds security-related middleware components in the typical recommended order:
 
 [!code-csharp[](index/snapshot/Program60All3.cs?highlight=19-43)]
 
@@ -119,7 +118,7 @@ app.UseResponseCompression();
 app.UseStaticFiles();
 ```
 
-The following *Program.cs* code adds middleware components for common app scenarios:
+The following `Program.cs` code adds middleware components for common app scenarios:
 
 1. Exception/error handling
    * When the app runs in the Development environment:
@@ -180,6 +179,10 @@ app.MapRazorPages();
 ```
 
 For information about Single Page Applications, see the guides for the [React](xref:spa/react) and [Angular](xref:spa/angular) project templates.
+
+## UseCors and UseStaticFiles order
+
+The order for calling `UseCors` and `UseStaticFiles` depends on the app. For more information, see [UseCors and UseStaticFiles order](xref:security/cors#uc1)
 
 ### Forwarded Headers Middleware order
 
@@ -257,6 +260,8 @@ ASP.NET Core ships with the following middleware components. The *Order* column 
 | [HTTP Strict Transport Security (HSTS)](xref:security/enforcing-ssl#http-strict-transport-security-protocol-hsts) | Security enhancement middleware that adds a special response header. | Before responses are sent and after components that modify requests. Examples: Forwarded Headers, URL Rewriting. |
 | [MVC](xref:mvc/overview) | Processes requests with MVC/Razor Pages. | Terminal if a request matches a route. |
 | [OWIN](xref:fundamentals/owin) | Interop with OWIN-based apps, servers, and middleware. | Terminal if the OWIN Middleware fully processes the request. |
+| [Rate Limiting](xref:performance/rate-limit) | Provides support for rate limiting endpoints. | Before components that should be limited. |
+| [Request Decompression](xref:fundamentals/middleware/request-decompression) | Provides support for decompressing requests. | Before components that read the request body. |
 | [Response Caching](xref:performance/caching/middleware) | Provides support for caching responses. | Before components that require caching. `UseCORS` must come before `UseResponseCaching`.|
 | [Response Compression](xref:performance/response-compression) | Provides support for compressing responses. | Before components that require compression. |
 | [Request Localization](xref:fundamentals/localization) | Provides localization support. | Before localization sensitive components. Must appear after Routing Middleware when using <xref:Microsoft.AspNetCore.Localization.Routing.RouteDataRequestCultureProvider>. |
@@ -273,6 +278,7 @@ ASP.NET Core ships with the following middleware components. The *Order* column 
 * [Lifetime and registration options](xref:fundamentals/dependency-injection#lifetime-and-registration-options) contains a complete sample of middleware with *scoped*, *transient*, and *singleton* lifetime services.
 * <xref:fundamentals/middleware/write>
 * <xref:test/middleware>
+* [Configure gRPC-Web in ASP.NET Core](xref:grpc/browser#configure-grpc-web-in-aspnet-core)
 * <xref:migration/http-modules>
 * <xref:fundamentals/startup>
 * <xref:fundamentals/request-features>

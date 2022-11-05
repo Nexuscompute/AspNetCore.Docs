@@ -6,14 +6,13 @@ monikerRange: '>= aspnetcore-3.1'
 ms.author: riande
 ms.custom: mvc
 ms.date: 1/07/2022
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: host-and-deploy/proxy-load-balancer
 ---
 # Configure ASP.NET Core to work with proxy servers and load balancers
 
 By [Chris Ross](https://github.com/Tratcher)
 
-::: moniker range=">= aspnetcore-6.0"
+:::moniker range=">= aspnetcore-6.0"
 
 In the recommended configuration for ASP.NET Core, the app is hosted using <xref:host-and-deploy/aspnet-core-module>, Nginx, or Apache. Proxy servers, load balancers, and other network appliances often obscure information about the request before it reaches the app:
 
@@ -129,7 +128,12 @@ If `/foo` is the app base path for a proxy path passed as `/foo/api/1`, the midd
 
 ```csharp
 app.UsePathBase("/foo");
+// ...
+app.UseRouting();
 ```
+
+> [!NOTE]
+> When using <xref:Microsoft.AspNetCore.Builder.WebApplication> (see <xref:migration/50-to-60#new-hosting-model>), [`app.UseRouting`](xref:Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseRouting%2A) must be called after `UsePathBase` so that the routing middleware can observe the modified path before matching routes. Otherwise, routes are matched before the path is rewritten by `UsePathBase` as described in the [Middleware Ordering](xref:fundamentals/middleware/index#order) and [Routing](xref:fundamentals/routing) articles.
 
 The original path and path base are reapplied when the middleware is called again in reverse. For more information on middleware order processing, see <xref:fundamentals/middleware/index>.
 
@@ -167,9 +171,7 @@ If the proxy doesn't use headers named `X-Forwarded-For` and `X-Forwarded-Proto`
 
 Apps that call <xref:Microsoft.AspNetCore.Builder.HttpsPolicyBuilderExtensions.UseHttpsRedirection*> and <xref:Microsoft.AspNetCore.Builder.HstsBuilderExtensions.UseHsts*> put a site into an infinite loop if deployed to an Azure Linux App Service, Azure Linux virtual machine (VM), or behind any other reverse proxy besides IIS. TLS is terminated by the reverse proxy, and Kestrel isn't made aware of the correct request scheme. OAuth and OIDC also fail in this configuration because they generate incorrect redirects. <xref:Microsoft.AspNetCore.Hosting.WebHostBuilderIISExtensions.UseIISIntegration*> adds and configures Forwarded Headers Middleware when running behind IIS, but there's no matching automatic configuration for Linux (Apache or Nginx integration).
 
-To forward the scheme from the proxy in non-IIS scenarios, add and configure Forwarded Headers Middleware. In `Program.cs`, use the following code:
-
-[!code-csharp[](~/host-and-deploy/proxy-load-balancer/6.1samples/WebPS/Program.cs?name=snippet_ln&highlight=7-21)]
+To forward the scheme from the proxy in non-IIS scenarios, enable the Forwarded Headers Middleware by setting `ASPNETCORE_FORWARDEDHEADERS_ENABLED` to `true`. Warning: This flag uses settings designed for cloud environments and doesn't enable features such as the [`KnownProxies option`](#forwarded-headers-middleware-options) to restrict which IPs forwarders are accepted from.
 
 ## Certificate forwarding
 
@@ -224,9 +226,9 @@ In the preceding example, 10.0.0.100 is a proxy server. If the server is a trust
 
 [!code-csharp[](~/host-and-deploy/proxy-load-balancer/6.1samples/WebPS/Program.cs?name=snippet_kp&highlight=11)]
 
-To display the logs, add `"Microsoft.AspNetCore.HttpLogging": "Information"` to the *appsettings.Development.json* file:
+To display the logs, add `"Microsoft.AspNetCore.HttpLogging": "Information"` to the `appsettings.Development.json` file:
 
-[!code-xml[](~/host-and-deploy/proxy-load-balancer/6.1samples/WebPS/appsettings.Development.json?highlight=7)]
+[!code-json[](~/host-and-deploy/proxy-load-balancer/6.1samples/WebPS/appsettings.Development.json?highlight=7)]
 
 > [!IMPORTANT]
 > Only allow trusted proxies and networks to forward headers. Otherwise, [IP spoofing](https://www.iplocation.net/ip-spoofing) attacks are possible.
@@ -235,10 +237,11 @@ To display the logs, add `"Microsoft.AspNetCore.HttpLogging": "Information"` to 
 
 * <xref:host-and-deploy/web-farm>
 * [Microsoft Security Advisory CVE-2018-0787: ASP.NET Core Elevation Of Privilege Vulnerability](https://github.com/aspnet/Announcements/issues/295)
+* [YARP: Yet Another Reverse Proxy](https://microsoft.github.io/reverse-proxy/index.html)
 
-::: moniker-end
+:::moniker-end
 
-::: moniker range="< aspnetcore-6.0"
+:::moniker range="< aspnetcore-6.0"
 
 In the recommended configuration for ASP.NET Core, the app is hosted using IIS/ASP.NET Core Module, Nginx, or Apache. Proxy servers, load balancers, and other network appliances often obscure information about the request before it reaches the app:
 
@@ -570,5 +573,6 @@ services.Configure<ForwardedHeadersOptions>(options =>
 
 * <xref:host-and-deploy/web-farm>
 * [Microsoft Security Advisory CVE-2018-0787: ASP.NET Core Elevation Of Privilege Vulnerability](https://github.com/aspnet/Announcements/issues/295)
+* [YARP: Yet Another Reverse Proxy](https://microsoft.github.io/reverse-proxy/index.html)
 
-::: moniker-end
+:::moniker-end

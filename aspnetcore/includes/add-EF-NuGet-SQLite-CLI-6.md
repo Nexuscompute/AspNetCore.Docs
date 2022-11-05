@@ -1,12 +1,9 @@
----
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
----
 Run the following .NET CLI commands:
 
 ```dotnetcli
-dotnet tool uninstall -g dotnet-aspnet-codegenerator
-dotnet tool install -g dotnet-aspnet-codegenerator
-dotnet tool uninstall -g dotnet-ef
+dotnet tool uninstall --global dotnet-aspnet-codegenerator
+dotnet tool install --global dotnet-aspnet-codegenerator
+dotnet tool uninstall --global dotnet-ef
 dotnet tool install --global dotnet-ef
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.SQLite

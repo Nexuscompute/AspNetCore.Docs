@@ -6,7 +6,6 @@ monikerRange: '>= aspnetcore-3.1'
 ms.author: riande
 ms.custom: mvc
 ms.date: 12/17/2021
-no-loc: [Home, Privacy, Kestrel, appsettings.json, "ASP.NET Core Identity", cookie, Cookie, Blazor, "Blazor Server", "Blazor WebAssembly", "Identity", "Let's Encrypt", Razor, SignalR]
 uid: fundamentals/host/hosted-services
 ---
 # Background tasks with hosted services in ASP.NET Core
@@ -35,7 +34,7 @@ To use the template as a basis for a hosted services app:
 
 ## Package
 
-An app based on the Worker Service template uses the `Microsoft.NET.Sdk.Worker` SDK and has an explicit package reference to the [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting) package. For example, see the sample app's project file (*BackgroundTasksSample.csproj*).
+An app based on the Worker Service template uses the `Microsoft.NET.Sdk.Worker` SDK and has an explicit package reference to the [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting) package. For example, see the sample app's project file (`BackgroundTasksSample.csproj`).
 
 For web apps that use the `Microsoft.NET.Sdk.Web` SDK, the [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting) package is referenced implicitly from the shared framework. An explicit package reference in the app's project file isn't required.
 
@@ -93,7 +92,7 @@ A timed background task makes use of the [System.Threading.Timer](xref:System.Th
 
 The <xref:System.Threading.Timer> doesn't wait for previous executions of `DoWork` to finish, so the approach shown might not be suitable for every scenario. [Interlocked.Increment](xref:System.Threading.Interlocked.Increment%2A) is used to increment the execution counter as an atomic operation, which ensures that multiple threads don't update `executionCount` concurrently.
 
-The service is registered in `IHostBuilder.ConfigureServices` (*Program.cs*) with the `AddHostedService` extension method:
+The service is registered in `IHostBuilder.ConfigureServices` (`Program.cs`) with the `AddHostedService` extension method:
 
 :::code language="csharp" source="hosted-services/samples/6.0/BackgroundTasksSample/Program.cs" id="snippet1":::
 
@@ -112,7 +111,7 @@ The hosted service creates a scope to resolve the scoped background task service
 
 :::code language="csharp" source="hosted-services/samples/6.0/BackgroundTasksSample/Services/ConsumeScopedServiceHostedService.cs" id="snippet1" highlight="19,22-35":::
 
-The services are registered in `IHostBuilder.ConfigureServices` (*Program.cs*). The hosted service is registered with the `AddHostedService` extension method:
+The services are registered in `IHostBuilder.ConfigureServices` (`Program.cs`). The hosted service is registered with the `AddHostedService` extension method:
 
 :::code language="csharp" source="hosted-services/samples/3.x/BackgroundTasksSample/Program.cs" id="snippet2":::
 
@@ -140,16 +139,17 @@ A `MonitorLoop` service handles enqueuing tasks for the hosted service whenever 
 
 :::code language="csharp" source="hosted-services/samples/6.0/BackgroundTasksSample/Services/MonitorLoop.cs" id="snippet_Monitor" highlight="7,33":::
 
-The services are registered in `IHostBuilder.ConfigureServices` (*Program.cs*). The hosted service is registered with the `AddHostedService` extension method:
+The services are registered in `IHostBuilder.ConfigureServices` (`Program.cs`). The hosted service is registered with the `AddHostedService` extension method:
 
 :::code language="csharp" source="hosted-services/samples/6.0/BackgroundTasksSample/Program.cs" id="snippet3":::
 
-`MonitorLoop` is started in *Program.cs*:
+`MonitorLoop` is started in `Program.cs`:
 
 :::code language="csharp" source="hosted-services/samples/6.0/BackgroundTasksSample/Program.cs" id="snippet4":::
 
 ## Additional resources
 
+* [Background services unit tests on GitHub](https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Hosting/tests/UnitTests/BackgroundServiceTests.cs).
 * [View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/host/hosted-services/samples/) ([how to download](xref:index#how-to-download-a-sample))
 * [Implement background tasks in microservices with IHostedService and the BackgroundService class](/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/background-tasks-with-ihostedservice)
 * [Run background tasks with WebJobs in Azure App Service](/azure/app-service/webjobs-create)
@@ -181,7 +181,7 @@ To use the template as a basis for a hosted services app:
 
 ## Package
 
-An app based on the Worker Service template uses the `Microsoft.NET.Sdk.Worker` SDK and has an explicit package reference to the [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting) package. For example, see the sample app's project file (*BackgroundTasksSample.csproj*).
+An app based on the Worker Service template uses the `Microsoft.NET.Sdk.Worker` SDK and has an explicit package reference to the [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting) package. For example, see the sample app's project file (`BackgroundTasksSample.csproj`).
 
 For web apps that use the `Microsoft.NET.Sdk.Web` SDK, the [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting) package is referenced implicitly from the shared framework. An explicit package reference in the app's project file isn't required.
 
@@ -262,7 +262,7 @@ A timed background task makes use of the [System.Threading.Timer](xref:System.Th
 
 The <xref:System.Threading.Timer> doesn't wait for previous executions of `DoWork` to finish, so the approach shown might not be suitable for every scenario. [Interlocked.Increment](xref:System.Threading.Interlocked.Increment%2A) is used to increment the execution counter as an atomic operation, which ensures that multiple threads don't update `executionCount` concurrently.
 
-The service is registered in `IHostBuilder.ConfigureServices` (*Program.cs*) with the `AddHostedService` extension method:
+The service is registered in `IHostBuilder.ConfigureServices` (`Program.cs`) with the `AddHostedService` extension method:
 
 :::code language="csharp" source="hosted-services/samples/3.x/BackgroundTasksSample/Program.cs" id="snippet1":::
 
@@ -281,7 +281,7 @@ The hosted service creates a scope to resolve the scoped background task service
 
 :::code language="csharp" source="hosted-services/samples/3.x/BackgroundTasksSample/Services/ConsumeScopedServiceHostedService.cs" id="snippet1" highlight="19,22-35":::
 
-The services are registered in `IHostBuilder.ConfigureServices` (*Program.cs*). The hosted service is registered with the `AddHostedService` extension method:
+The services are registered in `IHostBuilder.ConfigureServices` (`Program.cs`). The hosted service is registered with the `AddHostedService` extension method:
 
 :::code language="csharp" source="hosted-services/samples/3.x/BackgroundTasksSample/Program.cs" id="snippet2":::
 
@@ -309,7 +309,7 @@ A `MonitorLoop` service handles enqueuing tasks for the hosted service whenever 
 
 :::code language="csharp" source="hosted-services/samples/3.x/BackgroundTasksSample/Services/MonitorLoop.cs" id="snippet_Monitor" highlight="7,33":::
 
-The services are registered in `IHostBuilder.ConfigureServices` (*Program.cs*). The hosted service is registered with the `AddHostedService` extension method:
+The services are registered in `IHostBuilder.ConfigureServices` (`Program.cs`). The hosted service is registered with the `AddHostedService` extension method:
 
 :::code language="csharp" source="hosted-services/samples/3.x/BackgroundTasksSample/Program.cs" id="snippet3":::
 
